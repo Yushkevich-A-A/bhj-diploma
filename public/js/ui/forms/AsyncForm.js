@@ -47,7 +47,6 @@ class AsyncForm {
       console.log(item);
       obj[item.name] = item.value;
     }
-
     return obj;
   }
 

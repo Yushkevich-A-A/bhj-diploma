@@ -8,16 +8,15 @@ const createRequest = (options = {}) => {
     let formData;
 
     if (options.method === 'GET') {
-        dataUrl = options.url + '?';
         const arr = [];
         for (let key of keysOfData) {
-            arr.push(key + '=' + keysOfData[key]);
+            arr.push(key + '=' + options.data[key]);
         }
         dataUrl = options.url + '?' + arr.join('&');
-    } else if (metod.data) {
+    } else {
         formData = new FormData();
         for (let key of keysOfData) {
-            formData.append(key, keysOfData[key]);
+            formData.append(key, options.data[key]);
         }     
     }
 
@@ -32,12 +31,20 @@ const createRequest = (options = {}) => {
     }
 
     xhr.addEventListener('readystatechange', () => {
-        if (xhr.readyState === xhr.DONE) {
-            options.callback(null, xhr.responseText);
-        } else {
+        if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+            if(xhr.response.success === false) {
+                options.callback(xhr.response.error);
+            } else {
+                options.callback(xhr.response);
+            }
+        } else if (xhr.readyState === xhr.DONE) {
             options.callback(xhr.statusText);
         }
     })
 
-    (options.method === 'GET') ? xhr.send() : xhr.send(formData);
+    if(options.method === 'GET') {
+       xhr.send();
+    } else {
+        xhr.send(formData);
+    }
 };

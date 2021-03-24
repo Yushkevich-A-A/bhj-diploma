@@ -36,6 +36,21 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-
+    const battonsSideBarList = document.getElementsByClassName('menu-item');
+    for (let item of battonsSideBarList) {
+      item.querySelector('a').addEventListener('click', e => {
+        e.preventDefault();
+        const value = item.className.split('_').pop();
+        if (value === 'logout') {
+          User.logout( null, response => {
+            if (response.success = true) {
+              App.setState('init');
+            }
+          });
+        } else {
+          App.getModal(value);
+        }
+      })
+    }
   }
 }
