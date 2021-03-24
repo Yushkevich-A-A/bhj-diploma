@@ -20,6 +20,7 @@ class AccountsWidget {
     this.element = element;
     this.elementList = this.element.getElementsByclassName('account')
     this.registerEvents();
+    this.update();
   }
 
   /**
@@ -32,11 +33,10 @@ class AccountsWidget {
   registerEvents() {
     this.element.querySelector('.create-account').addEventListener('click', e => {
       App.getModal('createAccount');
-      AccountsWidget.update();
     });
     for(let item of this.elementList) {
       item.addEventListener('click', e => {
-        AccountsWidget.onSelectAccount();
+        this.onSelectAccount();
       })
     }
   }
@@ -56,7 +56,7 @@ class AccountsWidget {
       Account.list(User.currant(), response => {
         if (response.success === true) {
           this.clear();
-          this.renderItem();
+          this.renderItem(response.list);
         }
       })
     }
@@ -81,7 +81,11 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount( element ) {
-
+    for (let item of this.elementList) {
+      item.classList.remove('active');
+    }
+    element.classList.add('active');
+    App.showPage( 'transactions', { account_id: id_счёта });
   }
 
   /**
@@ -90,7 +94,25 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item){
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    const spanBankName = document.createElement('span');
+    const spanQuantity = document.createElement('span');
 
+    li.classList.add('account');
+    li.classList.add('active');
+    li.dataset = item.id;
+
+    a.href = '#';
+
+    spanBankName.value = item.name;
+    spanQuantity.value = item.sum;
+
+    li.appendChild(a);
+    a.appendChild(spanBankName);
+    a.appendChild(spanQuantity);
+
+    return li;
   }
 
   /**
@@ -100,6 +122,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-
+    this.element.appendChild(getAccountHTML(data));
   }
 }
