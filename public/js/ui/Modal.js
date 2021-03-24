@@ -17,6 +17,7 @@ class Modal {
       }
       this.element = element;
       this.registerEvents();
+      this.open();
   }
 
   /**
@@ -26,7 +27,7 @@ class Modal {
    * */
   registerEvents() {
       for(let dismiss of this.element.querySelectorAll('[data-dismiss="modal"]')) {
-        dismiss.addEventListener('click', onClose);
+        dismiss.addEventListener('click', e => onClose(e));
       }
   }
 
