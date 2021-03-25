@@ -18,7 +18,7 @@ class AccountsWidget {
       throw Error('Элемента не существует');
     }
     this.element = element;
-    this.elementList = this.element.getElementsByclassName('account')
+    this.elementList = this.element.getElementsByClassName('account')
     this.registerEvents();
     this.update();
   }
@@ -52,9 +52,9 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    if (User.currant()) {
-      Account.list(User.currant(), response => {
-        if (response.success === true) {
+    if (User.current()) {
+      Account.list(User.current(), response => {
+        if (response.success) {
           this.clear();
           this.renderItem(response.list);
         }

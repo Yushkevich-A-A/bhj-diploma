@@ -44,21 +44,15 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    debugger;
-    createRequest({
-      url: this.url + '/current',
-      method: 'GET',
-      responseType: 'json',
-      data: this.current(),
-      callback:  (err, response) => {
-        if (response.success === true) {
-          this.setCurrent(response.user);
-        } else {
-          this.unsetCurrent()
-        }
-        callback(err, response);
-      },
-    });
+    if (this.current()) {
+      createRequest({
+        url: this.url + '/current',
+        method: 'GET',
+        responseType: 'json',
+        data: this.current(),
+        callback: callback,
+      });
+    }
   }
 
   /**
