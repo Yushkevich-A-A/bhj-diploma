@@ -11,13 +11,13 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback){
-    createRequest({
-      url: this.url,
-      method: 'GET',
-      responseType: 'json',
-      data: data,
-      callback: callback,
-    });
+    // createRequest({
+    //   url: this.url,
+    //   method: 'GET',
+    //   responseType: 'json',
+    //   data: data,
+    //   callback: callback,
+    // });
   }
 
   /**
@@ -26,13 +26,13 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    createRequest({
-      url: this.url,
-      method: 'PUT',
-      responseType: 'json',
-      data: data,
-      callback: callback,
-    });
+    // createRequest({
+    //   url: this.url,
+    //   method: 'PUT',
+    //   responseType: 'json',
+    //   data: data,
+    //   callback: callback,
+    // });
   }
 
   /**
@@ -40,12 +40,12 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback ) {
-    createRequest({
-      url: this.url,
-      method: 'DELETE',
-      responseType: 'json',
-      data: data,
-      callback: callback,
-    });
+    // createRequest({
+    //   url: this.url,
+    //   method: 'DELETE',
+    //   responseType: 'json',
+    //   data: data,
+    //   callback: callback,
+    // });
   }
 }

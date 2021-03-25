@@ -14,7 +14,7 @@ class AsyncForm {
    * */
   constructor(element) {
     if (!element) {
-      throw Error('Элемента не существует');
+      throw Error('элемент не существует');
     }
     this.element = element;
     this.registerEvents();
@@ -40,18 +40,17 @@ class AsyncForm {
    * }
    * */
   getData() {
-    const fieldsOfForm = this.element.getElementsByTagName('input');
+    const formData = new FormData( this.element );
+    const entires = formData.entries();
     const obj = {};
 
-    for (let item of fieldsOfForm) {
-      console.log(item);
-      obj[item.name] = item.value;
+    for (let item of entires) {
+      obj[item[0]] = item[1];
     }
     return obj;
   }
 
   onSubmit(options){
-
   }
 
   /**

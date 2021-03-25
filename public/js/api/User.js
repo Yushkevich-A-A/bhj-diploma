@@ -12,12 +12,12 @@ class User {
    * локальном хранилище.
    * */
   static setCurrent(user) {
-    let dataUser = {};
-    for (let value of Object.keys(user)) {
-      if (value === 'id' || value === 'name')
-      dataUser[value] = user[value];
-    }
-    localStorage.setItem('user', JSON.stringify(dataUser));
+    // let dataUser = {};
+    // for (let value of Object.keys(user)) {
+    //   if (value === 'id' || value === 'name')
+    //   dataUser[value] = user[value];
+    // }
+    // localStorage.setItem('user', JSON.stringify(dataUser));
   }
 
   /**
@@ -25,7 +25,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    localStorage.removeItem('user');
+    // localStorage.removeItem('user');
   }
 
   /**
@@ -33,10 +33,10 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    if (localStorage.getItem('user')) {
-      return JSON.parse(localStorage.getItem('user'))
-    } 
-    return undefined;
+    // if (localStorage.getItem('user')) {
+    //   return JSON.parse(localStorage.getItem('user'))
+    // } 
+    // return undefined;
   }
 
   /**
@@ -44,15 +44,15 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    if (this.current()) {
-      createRequest({
-        url: this.url + '/current',
-        method: 'GET',
-        responseType: 'json',
-        data: this.current(),
-        callback: callback,
-      });
-    }
+    // if (this.current()) {
+    //   createRequest({
+    //     url: this.url + '/current',
+    //     method: 'GET',
+    //     responseType: 'json',
+    //     data: this.current(),
+    //     callback: callback,
+    //   });
+    // }
   }
 
   /**
@@ -62,18 +62,18 @@ class User {
    * User.setCurrent.
    * */
   static login( data, callback) {
-    createRequest({
-      url: this.url + '/login',
-      method: 'POST',
-      responseType: 'json',
-      data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        }
-        callback(err, response);
-      }
-    });
+    // createRequest({
+    //   url: this.url + '/login',
+    //   method: 'POST',
+    //   responseType: 'json',
+    //   data,
+    //   callback: (err, response) => {
+    //     if (response && response.user) {
+    //       this.setCurrent(response.user);
+    //     }
+    //     callback(err, response);
+    //   }
+    // });
   }
 
   /**

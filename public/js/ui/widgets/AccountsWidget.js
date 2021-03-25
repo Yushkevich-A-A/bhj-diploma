@@ -14,13 +14,13 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-    if (!element) {
-      throw Error('Элемента не существует');
-    }
-    this.element = element;
-    this.elementList = this.element.getElementsByClassName('account')
-    this.registerEvents();
-    this.update();
+    // if (!element) {
+    //   throw Error('элемент не существует');
+    // }
+    // this.element = element;
+    // this.elementList = this.element.getElementsByClassName('account')
+    // this.registerEvents();
+    // this.update();
   }
 
   /**
@@ -31,14 +31,14 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-    this.element.querySelector('.create-account').addEventListener('click', e => {
-      App.getModal('createAccount');
-    });
-    for(let item of this.elementList) {
-      item.addEventListener('click', e => {
-        this.onSelectAccount();
-      })
-    }
+    // this.element.querySelector('.create-account').addEventListener('click', e => {
+    //   App.getModal('createAccount');
+    // });
+    // for(let item of this.elementList) {
+    //   item.addEventListener('click', e => {
+    //     this.onSelectAccount();
+    //   })
+    // }
   }
 
   /**
@@ -52,14 +52,14 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    if (User.current()) {
-      Account.list(User.current(), response => {
-        if (response.success) {
-          this.clear();
-          this.renderItem(response.list);
-        }
-      })
-    }
+    // if (User.current()) {
+    //   Account.list(User.current(), response => {
+    //     if (response.success) {
+    //       this.clear();
+    //       this.renderItem(response.list);
+    //     }
+    //   })
+    // }
   }
 
   /**
@@ -68,9 +68,9 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    for (let item of this.elementList) {
-      item.remove();
-    }
+    // for (let item of this.elementList) {
+    //   item.remove();
+    // }
   }
 
   /**
@@ -81,11 +81,11 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount( element ) {
-    for (let item of this.elementList) {
-      item.classList.remove('active');
-    }
-    element.classList.add('active');
-    App.showPage( 'transactions', { account_id: id_счёта });
+    // for (let item of this.elementList) {
+    //   item.classList.remove('active');
+    // }
+    // element.classList.add('active');
+    // App.showPage( 'transactions', { account_id: id_счёта });
   }
 
   /**
@@ -94,25 +94,25 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item){
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    const spanBankName = document.createElement('span');
-    const spanQuantity = document.createElement('span');
+    // const li = document.createElement('li');
+    // const a = document.createElement('a');
+    // const spanBankName = document.createElement('span');
+    // const spanQuantity = document.createElement('span');
 
-    li.classList.add('account');
-    li.classList.add('active');
-    li.dataset = item.id;
+    // li.classList.add('account');
+    // li.classList.add('active');
+    // li.dataset = item.id;
 
-    a.href = '#';
+    // a.href = '#';
 
-    spanBankName.value = item.name;
-    spanQuantity.value = item.sum;
+    // spanBankName.value = item.name;
+    // spanQuantity.value = item.sum;
 
-    li.appendChild(a);
-    a.appendChild(spanBankName);
-    a.appendChild(spanQuantity);
+    // li.appendChild(a);
+    // a.appendChild(spanBankName);
+    // a.appendChild(spanQuantity);
 
-    return li;
+    // return li;
   }
 
   /**
@@ -122,6 +122,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-    this.element.appendChild(getAccountHTML(data));
+    // this.element.appendChild(getAccountHTML(data));
   }
 }

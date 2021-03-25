@@ -41,7 +41,6 @@ class Sidebar {
       item.querySelector('a').addEventListener('click', e => {
         e.preventDefault();
         const value = item.className.split('_').pop();
-        console.log(value);
         if (value === 'logout') {
           User.logout( null, response => {
             if (response.success = true) {
@@ -49,7 +48,7 @@ class Sidebar {
             }
           });
         } else {
-          App.getModal(value);
+          App.getModal(value).open();
         }
       })
     }
