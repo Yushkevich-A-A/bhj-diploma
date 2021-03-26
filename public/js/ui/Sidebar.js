@@ -39,17 +39,21 @@ class Sidebar {
     const battonsSideBarList = document.getElementsByClassName('menu-item');
     for (let item of battonsSideBarList) {
       item.querySelector('a').addEventListener('click', e => {
+
         e.preventDefault();
         const value = item.className.split('_').pop();
-        if (value === 'logout') {
-          User.logout( null, response => {
-            if (response.success = true) {
-              App.setState('init');
-            }
-          });
-        } else {
-          App.getModal(value).open();
+        if (value !== 'logout') {
+          return App.getModal(value).open();
         }
+        User.logout( User.current(), (err, response) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+
+          App.setState('init');
+
+        });
       })
     }
   }

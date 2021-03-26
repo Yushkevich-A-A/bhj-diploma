@@ -5,6 +5,12 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1"
+    },
+    {
+      "name": "Антон",
+      "email": "Mortifer1993@yandex.ru",
+      "password": "1233",
+      "id": "81ckmq64j59"
     }
   ],
   "accounts": [
