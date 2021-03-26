@@ -24,7 +24,7 @@ class TransactionsPage {
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render(this.lastOptions);
+    // this.render(this.lastOptions);
   }
 
   /**
@@ -34,17 +34,17 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    const removeAccountElement = document.querySelector('.remove-account');
-    removeAccountElement.addEventListener('click', e => {
-      this.removeAccount();
-    });
+    // const removeAccountElement = document.querySelector('.remove-account');
+    // removeAccountElement.addEventListener('click', e => {
+    //   this.removeAccount();
+    // });
 
-    const transactionRemove = document.querySelector('.transaction__remove');
-    if (transactionRemove) {
-      transactionRemove.addEventListener('click', e => {
-        this.removeTransaction(transactionRemove.dataset.id);
-      })
-    }
+    // const transactionRemove = document.querySelector('.transaction__remove');
+    // if (transactionRemove) {
+    //   transactionRemove.addEventListener('click', e => {
+    //     this.removeTransaction(transactionRemove.dataset.id);
+    //   })
+    // }
 
   }
 
@@ -58,14 +58,14 @@ class TransactionsPage {
    * для обновления приложения
    * */
   removeAccount() {
-    if(confirm('Вы действительно хотите удалить счет?')) {
-      Account.remove({}, response => {
-       if (response.success) {
-          App.updateWidgets()
-        }
-      });
-      this.clear();
-    }
+    // if(confirm('Вы действительно хотите удалить счет?')) {
+    //   Account.remove({}, response => {
+    //    if (response.success) {
+    //       App.updateWidgets()
+    //     }
+    //   });
+    //   this.clear();
+    // }
   }
 
   /**
@@ -75,15 +75,15 @@ class TransactionsPage {
    * либо обновляйте текущую страницу (метод update) и виджет со счетами
    * */
   removeTransaction( id ) {
-    if(confirm('Вы действительно хотите удалить транзакцию?')) {
-      Transaction.remove({}, response => {
-        if (response.success) {
-          this.lastOptions = id;
-          this.update();
-          App.updateWidgets();
-        }
-      })
-    } 
+    // if(confirm('Вы действительно хотите удалить транзакцию?')) {
+    //   Transaction.remove({}, response => {
+    //     if (response.success) {
+    //       this.lastOptions = id;
+    //       this.update();
+    //       App.updateWidgets();
+    //     }
+    //   })
+    // } 
   }
 
   /**
@@ -93,16 +93,16 @@ class TransactionsPage {
    * в TransactionsPage.renderTransactions()
    * */
   render(options){
-    Account.get(options, response => {
-      if(response.success) {
-        this.renderTitle(response.name);
-        Transaction.list ({}, response => {
-          if(response.success) {
-            this.renderTransactions(response.data);
-          }
-        })
-      }
-    });
+    // Account.get(options, response => {
+    //   if(response.success) {
+    //     this.renderTitle(response.name);
+    //     Transaction.list ({}, response => {
+    //       if(response.success) {
+    //         this.renderTransactions(response.data);
+    //       }
+    //     })
+    //   }
+    // });
   }
 
   /**
@@ -111,17 +111,17 @@ class TransactionsPage {
    * Устанавливает заголовок: «Название счёта»
    * */
   clear() {
-    this.renderTransactions([]);
-    this.renderTitle('Название счёта');
-    this.lastOptions = null;
+    // this.renderTransactions([]);
+    // this.renderTitle('Название счёта');
+    // this.lastOptions = null;
   }
 
   /**
    * Устанавливает заголовок в элемент .content-title
    * */
   renderTitle(name){
-    const contentTitle = document.querySelector('.content-title');
-    contentTitle.textContent = name;
+    // const contentTitle = document.querySelector('.content-title');
+    // contentTitle.textContent = name;
   }
 
   /**
