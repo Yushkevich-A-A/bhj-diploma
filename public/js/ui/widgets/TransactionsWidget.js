@@ -25,16 +25,15 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
-
-    this.element.querySelector('.create-income-button').addEventListener('click', e => {
+    this.element.addEventListener('click', e => {
       e.preventDefault();
-      App.getModal('newIncome').open();
-    });
+      if (e.target.classList.contains('create-income-button')) {
+        App.getModal('newIncome').open();
+      }
 
-    this.element.querySelector('.create-expense-button').addEventListener('click', e => {
-      e.preventDefault();
-      App.getModal('newExpense').open();
+      if (e.target.classList.contains('create-expense-button')) {
+        App.getModal('newExpense').open();
+      }
     });
   }
-  
 }

@@ -36,19 +36,16 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    const removeAccountElement = document.querySelector('.remove-account');
-    removeAccountElement.addEventListener('click', e => {
-      e.preventDefault();
+    this.element.addEventListener('click', e => {
+    e.preventDefault();
+    if(e.target.classList.contains('remove-account')) {
       this.removeAccount();
-    });
+    }
 
-    const transactionRemoveList = document.getElementsByClassName('transaction__remove');
-      console.log(transactionRemoveList);
-    for (let transactionRemove of transactionRemoveList)
-      transactionRemove.addEventListener('click', e => {
-        e.preventDefault();
-        this.removeTransaction(transactionRemove.dataset.id);
-      })
+    if(e.target.classList.contains('transaction__remove')) {
+      this.removeTransaction(e.target.dataset.id);
+    }
+  });
   }
 
   /**

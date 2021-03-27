@@ -18,9 +18,11 @@ class AccountsWidget {
       throw Error('элемент не существует');
     }
     this.element = element;
+
     this.elementList = this.element.getElementsByClassName('account');
 
-    // this.update(); // в описании выше написано, что необходимо вызвать метод AccountsWidget.update(), но данный метод вызывается в App,получается что здесь нет необходимости вызов делать?
+    this.registerEvents();
+    this.update(); 
   }
 
   /**
@@ -31,16 +33,16 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-    this.element.querySelector('.create-account').addEventListener('click', e => {
-      App.getModal('createAccount').open();
-    });
+    this.element.addEventListener('click', e => {
+      e.preventDefault();
+      if (e.target.classList.contains('create-account')) {
+        App.getModal('createAccount').open();
+      } 
 
-    for(let item of this.elementList) {
-      item.addEventListener('click', e => {
-        e.preventDefault();
-        this.onSelectAccount(item);
-      })
-    }
+      if (e.target.closest('.account')) {
+        this.onSelectAccount(e.target.closest('.account'));
+      }
+    });
   }
 
   /**
@@ -59,7 +61,6 @@ class AccountsWidget {
       Account.list(User.current(), response => {
         this.clear();
         this.renderItem(response.data);
-        this.registerEvents();
       });
     }
   }

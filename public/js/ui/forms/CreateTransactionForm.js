@@ -36,7 +36,6 @@ class CreateTransactionForm extends AsyncForm {
    * */
   onSubmit(data) {
     this.element.reset();
-    debugger;
     Transaction.create(data, () => {
           App.getModal(this.element.closest('.modal').dataset.modalId).close();
           App.update();
