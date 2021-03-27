@@ -11,13 +11,16 @@ class Account extends Entity {
    * */
   static get(id = '', callback){
     createRequest({
-      url: this.url,
+      url: this.url + '/' + id,
       method: 'GET',
       responseType: 'json',
-      data: {
-        id: id,
-      },
-      callback: callback,
+      callback: (err, response) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        callback(response.data);
+      }
     });
   }
 }

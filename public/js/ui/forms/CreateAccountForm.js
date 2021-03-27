@@ -1,3 +1,4 @@
+
 /**
  * Класс CreateAccountForm управляет формой
  * создания нового счёта
@@ -9,11 +10,10 @@ class CreateAccountForm extends AsyncForm {
    * и сбрасывает форму
    * */
   onSubmit(data) {
-    // Account.create(data, response => {
-    //   if (response.success === true) {
-    //     Modal.close();
-    //     App.update();
-    //   }
-    // })
+    this.element.reset();
+    Account.create(data, () => {
+      App.getModal('createAccount').close();
+      App.update();
+    })
   }
 }

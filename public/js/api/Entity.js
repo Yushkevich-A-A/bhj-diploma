@@ -17,7 +17,11 @@ class Entity {
       responseType: 'json',
       data: data,
       callback: (err, response) => {
-        console.log( response);
+        if (err) {
+          console.log(err);
+          return;
+        }
+        callback(response);
       }
       
     });
@@ -29,13 +33,19 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    // createRequest({
-    //   url: this.url,
-    //   method: 'PUT',
-    //   responseType: 'json',
-    //   data: data,
-    //   callback: callback,
-    // });
+    createRequest({
+      url: this.url,
+      method: 'PUT',
+      responseType: 'json',
+      data: data,
+      callback: (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        callback();
+      }
+    });
   }
 
   /**
@@ -43,12 +53,18 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback ) {
-    // createRequest({
-    //   url: this.url,
-    //   method: 'DELETE',
-    //   responseType: 'json',
-    //   data: data,
-    //   callback: callback,
-    // });
+    createRequest({
+      url: this.url,
+      method: 'DELETE',
+      responseType: 'json',
+      data: data,
+      callback: (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        callback();
+      }
+    });
   }
 }

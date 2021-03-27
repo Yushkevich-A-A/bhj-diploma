@@ -19,8 +19,8 @@ class AccountsWidget {
     }
     this.element = element;
     this.elementList = this.element.getElementsByClassName('account');
-    this.update();
-    this.registerEvents();
+
+    // this.update(); // в описании выше написано, что необходимо вызвать метод AccountsWidget.update(), но данный метод вызывается в App,получается что здесь нет необходимости вызов делать?
   }
 
   /**
@@ -34,8 +34,10 @@ class AccountsWidget {
     this.element.querySelector('.create-account').addEventListener('click', e => {
       App.getModal('createAccount').open();
     });
+
     for(let item of this.elementList) {
       item.addEventListener('click', e => {
+        e.preventDefault();
         this.onSelectAccount(item);
       })
     }
@@ -53,15 +55,12 @@ class AccountsWidget {
    * */
   update() {
     if (User.current()) {
-      Account.list(User.current(), (err, response) => {
-        if(err) {
-          console.log(err);
-          return;
-        }
-          this.clear();
-          this.renderItem(response.data);
-
-      })
+      this.clear();
+      Account.list(User.current(), response => {
+        this.clear();
+        this.renderItem(response.data);
+        this.registerEvents();
+      });
     }
   }
 
@@ -71,8 +70,8 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    for (let item of this.elementList) {
-      item.remove();
+    while (this.elementList.length !== 0) {
+      this.elementList[0].remove();
     }
   }
 
@@ -83,12 +82,17 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount( element ) {
-    for (let item of this.elementList) {
-      item.classList.remove('active');
+  onSelectAccount(element) {
+    if (element.classList.contains('active')) {
+      element.classList.toggle('active');
+    } else {
+      for (let item of this.elementList) {
+        item.classList.remove('active');
+      }
+      element.classList.add('active');
     }
-    element.classList.add('active');
-    App.showPage( 'transactions', { account_id: id_счёта });
+    
+    App.showPage( 'transactions', { account_id: element.dataset.id });
   }
 
   /**
@@ -103,16 +107,16 @@ class AccountsWidget {
     const spanQuantity = document.createElement('span');
 
     li.classList.add('account');
-    li.classList.add('active');
-    li.dataset = item.id;
+    li.dataset.id = item.id;
 
     a.href = '#';
 
-    spanBankName.value = item.name;
-    spanQuantity.value = item.sum;
+    spanBankName.textContent = item.name;
+    spanQuantity.textContent = item.sum;
 
     li.appendChild(a);
     a.appendChild(spanBankName);
+    spanBankName.insertAdjacentText('afterend', ' / ')
     a.appendChild(spanQuantity);
 
     return li;
@@ -125,6 +129,8 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-    this.element.appendChild(this.getAccountHTML(data));
+    for (let item of data) {
+          this.element.appendChild(this.getAccountHTML(item));
+    }
   }
 }

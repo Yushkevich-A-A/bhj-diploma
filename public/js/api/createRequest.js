@@ -40,18 +40,19 @@ const createRequest = (options = {}) => {
                 throw Error(xhr.statusText);
             }
 
-            (xhr.response.success) ?
-            options.callback(null, xhr.response) :
-            options.callback(xhr.response.error);
-
-        });
-        
-            if (options.method === 'GET') {
-                xhr.send();
+            if (xhr.response.success) {
+                options.callback(null, xhr.response);
             } else {
-                xhr.send(formData); 
+                options.callback(xhr.response.error);
             }
-            
+        });
+
+        if (options.method === 'GET') {
+            xhr.send();
+        } else {
+            xhr.send(formData);
+        }
+
 
 
     } catch (e) {
