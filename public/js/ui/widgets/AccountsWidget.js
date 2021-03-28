@@ -18,7 +18,6 @@ class AccountsWidget {
       throw Error('элемент не существует');
     }
     this.element = element;
-
     this.elementList = this.element.getElementsByClassName('account');
 
     this.registerEvents();
@@ -35,7 +34,7 @@ class AccountsWidget {
   registerEvents() {
     this.element.addEventListener('click', e => {
       e.preventDefault();
-      if (e.target.classList.contains('create-account')) {
+      if (e.target.closest('.create-account')) {
         App.getModal('createAccount').open();
       } 
 

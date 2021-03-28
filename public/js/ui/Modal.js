@@ -15,6 +15,7 @@ class Modal {
       if (!element) {
         throw Error('элемент не существует');
       }
+
       this.element = element;
       this.registerEvents();
   }
@@ -25,9 +26,12 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-      for(let dismiss of this.element.querySelectorAll('[data-dismiss="modal"]')) {
-        dismiss.addEventListener('click', e => this.onClose(e));
+    this.element.addEventListener('click', e => {
+      if (e.target.closest('[data-dismiss="modal"]')) {
+        e.preventDefault();
+        this.onClose(e.target.closest('.modal').querySelector('.form'));
       }
+    });
   }
 
   /**
@@ -35,9 +39,10 @@ class Modal {
    * Закрывает текущее окно (Modal.close())
    * */
   onClose(e) {
-    e.preventDefault();
+    e.reset();
     this.close();
   }
+
   /**
    * Открывает окно: устанавливает CSS-свойство display
    * со значением «block»
@@ -45,6 +50,7 @@ class Modal {
   open() {
     this.element.style.display = 'block';
   }
+  
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */

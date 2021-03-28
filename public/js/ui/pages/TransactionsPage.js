@@ -38,12 +38,12 @@ class TransactionsPage {
   registerEvents() {
     this.element.addEventListener('click', e => {
     e.preventDefault();
-    if(e.target.classList.contains('remove-account')) {
+    if(e.target.closest('.remove-account')) {
       this.removeAccount();
     }
 
-    if(e.target.classList.contains('transaction__remove')) {
-      this.removeTransaction(e.target.dataset.id);
+    if(e.target.closest('.transaction__remove')) {
+      this.removeTransaction(e.target.closest('.transaction__remove').dataset.id);
     }
   });
   }
@@ -63,7 +63,7 @@ class TransactionsPage {
     }
 
     if(confirm('Вы действительно хотите удалить счет?')) {
-      Account.remove({id:this.lastOptions}, () => {
+      Account.remove({id:this.lastOptions.account_id}, () => {
         this.clear();
         App.updateWidgets();
       })
@@ -78,8 +78,9 @@ class TransactionsPage {
    * */
   removeTransaction( id ) {
     if(confirm('Вы действительно хотите удалить транзакцию?')) {
-      Transaction.remove(id, () => {
-          App.update();
+      Transaction.remove({id:id}, () => {
+        this.render(this.lastOptions)
+        App.updateWidgets();
       })
     } 
   }
@@ -95,8 +96,8 @@ class TransactionsPage {
       return;
     }
 
-    this.lastOptions = options.account_id;
-    Account.get(this.lastOptions, responseDataAccount => {
+    this.lastOptions = options;
+    Account.get(this.lastOptions.account_id, responseDataAccount => {
       this.renderTitle(responseDataAccount.name);
 
         Transaction.list (options, responseTransactions => {

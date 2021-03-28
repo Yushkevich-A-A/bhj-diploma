@@ -9,6 +9,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   constructor(element) {
     super(element);
+    this.renderAccountsList();
   }
 
   /**
@@ -17,8 +18,8 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     const select = this.element.querySelector('.accounts-select')
-    select.innerHTML = '';
     Account.list( User.current(), response => {
+      select.innerHTML = '';
         for (let data of response.data) {
           const option = document.createElement('option');
           option.value = data.id;

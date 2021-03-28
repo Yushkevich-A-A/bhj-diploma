@@ -19,12 +19,15 @@ class Sidebar {
    * */
   static initToggleButton() {
     const pushMenu = document.querySelector('.sidebar-toggle');
-    const bodySidebarMini = document.querySelector('.sidebar-mini');
 
-    pushMenu.addEventListener('click', e => {    
+    pushMenu.addEventListener('click', e => {
       e.preventDefault();
-      bodySidebarMini.classList.toggle('sidebar-open');
-      bodySidebarMini.classList.toggle('sidebar-collapse');
+      if (e.target.closest('.sidebar-mini')) {
+        const bodySidebarMini = e.target.closest('.sidebar-mini');
+        bodySidebarMini.classList.toggle('sidebar-open');
+        bodySidebarMini.classList.toggle('sidebar-collapse');
+      }
+
     });
   }
 
@@ -36,25 +39,21 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-    const battonsSideBarList = document.getElementsByClassName('menu-item');
-    for (let item of battonsSideBarList) {
-      item.querySelector('a').addEventListener('click', e => {
-
-        e.preventDefault();
-        const value = item.className.split('_').pop();
-        if (value !== 'logout') {
-          return App.getModal(value).open();
+    document.querySelector('.sidebar-menu').addEventListener('click', e => {
+      e.preventDefault();
+      if (e.target.closest('.menu-item')) {
+        const item = e.target.closest('.menu-item').className.split('_').pop();
+        if (item !== 'logout') {
+          return App.getModal(item).open();
         }
-        User.logout( User.current(), (err, response) => {
+        User.logout(User.current(), err => {
           if (err) {
             console.log(err);
             return;
           }
-
           App.setState('init');
-
         });
-      })
-    }
+      }
+    });
   }
 }
